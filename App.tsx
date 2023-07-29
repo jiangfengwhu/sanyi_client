@@ -8,6 +8,7 @@ import {HomePage} from './app/pages/home';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import {DetailPage} from './app/pages/detail';
+import {LightTheme} from './app/themes/light';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,6 @@ function App(): JSX.Element {
     statusBarTranslucent: true,
     statusBarStyle: 'dark',
     statusBarColor: 'transparent',
-    animation: 'slide_from_right',
     // headerShown: false,
   };
   function readyInit() {
@@ -25,7 +25,7 @@ function App(): JSX.Element {
   }
   return (
     <SafeAreaProvider>
-      <NavigationContainer onReady={readyInit}>
+      <NavigationContainer onReady={readyInit} theme={LightTheme}>
         <Stack.Navigator initialRouteName={'home'} screenOptions={options}>
           <Stack.Screen name={'home'} component={HomePage} />
           <Stack.Screen name={'detail'} component={DetailPage} />
