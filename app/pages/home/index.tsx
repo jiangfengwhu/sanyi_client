@@ -1,33 +1,39 @@
 import React from 'react';
-import {Button, Text, View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import BundleManager from '../../bridges/bundleManager';
+import {
+  BottomTabNavigationOptions,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
+import {DetailPage} from '@pages/detail';
+// @ts-ignore
+import Icon from 'react-native-vector-icons/FontAwesome6';
+import {RouteProp} from '@react-navigation/core';
 
-function HomePage({navigation}: NativeStackScreenProps<any>) {
-  const fs = require('react-native-fs');
-  console.log(fs);
+const Tab = createBottomTabNavigator();
+const iconMap: {[name: string]: {focused: string; normal: string}} = {
+  home1: {
+    focused: 'house',
+    normal: 'house',
+  },
+  home2: {
+    focused: 'user',
+    normal: 'user',
+  },
+};
+const screenOptions = ({route}: {route: RouteProp<any>}) =>
+  ({
+    tabBarIcon: ({focused, color, size}) => {
+      let iconName = iconMap[route.name][focused ? 'focused' : 'normal'];
+      return <Icon name={iconName} size={20} color={color} />;
+    },
+    tabBarActiveTintColor: 'tomato',
+    tabBarInactiveTintColor: 'gray',
+  } as BottomTabNavigationOptions);
+function HomeTabs() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => {
-          navigation.setOptions({
-            headerStyle: {
-              backgroundColor: 'green',
-            },
-          });
-          // const result = fs.downloadFile({
-          //   fromUrl:
-          //     'https://down.wss.show/ajbve8z/b/t5/bt5oajbve8z?cdn_sign=1690622652-72-0-1bd5b8c0576fcaf4336782ba0473193d&exp=240&response-content-disposition=attachment%3B%20filename%3D%221.js%22%3B%20filename%2A%3Dutf-8%27%271.js',
-          //   toFile: fs.DownloadDirectoryPath + '/2.js',
-          // });
-          // result.promise.finally(console.log);
-          BundleManager.loadRNBundle(fs.DownloadDirectoryPath + '/2.js');
-          // navigation.navigate('detail');
-        }}
-      />
-    </View>
+    <Tab.Navigator screenOptions={screenOptions}>
+      <Tab.Screen name={'home2'} component={DetailPage} />
+      <Tab.Screen name={'home1'} component={DetailPage} />
+    </Tab.Navigator>
   );
 }
-export {HomePage};
+export {HomeTabs};

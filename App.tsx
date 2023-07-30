@@ -4,12 +4,13 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
-import {HomePage} from './app/pages/home';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
-import {DetailPage} from './app/pages/detail';
-import {LightTheme} from './app/themes/light';
+import {LightTheme} from '@themes/light';
+import {enableFreeze} from 'react-native-screens';
+import {pages} from '@routes/pages';
 
+enableFreeze(true);
 const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
@@ -27,8 +28,16 @@ function App(): JSX.Element {
     <SafeAreaProvider>
       <NavigationContainer onReady={readyInit} theme={LightTheme}>
         <Stack.Navigator initialRouteName={'home'} screenOptions={options}>
-          <Stack.Screen name={'home'} component={HomePage} />
-          <Stack.Screen name={'detail'} component={DetailPage} />
+          {pages.map(page => {
+            return (
+              <Stack.Screen
+                name={page.name}
+                options={page.options}
+                component={page.component}
+                key={page.name}
+              />
+            );
+          })}
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
