@@ -7,6 +7,7 @@ import {DetailPage} from '@pages/detail';
 // @ts-ignore
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {RouteProp} from '@react-navigation/core';
+import {NearbyPage} from '@pages/nearby';
 
 const Tab = createBottomTabNavigator();
 const iconMap: {[name: string]: {focused: string; normal: string}} = {
@@ -23,7 +24,7 @@ const screenOptions = ({route}: {route: RouteProp<any>}) =>
   ({
     tabBarIcon: ({focused, color, size}) => {
       let iconName = iconMap[route.name][focused ? 'focused' : 'normal'];
-      return <Icon name={iconName} size={20} color={color} />;
+      return <Icon name={iconName} size={size} color={color} />;
     },
     tabBarActiveTintColor: 'tomato',
     tabBarInactiveTintColor: 'gray',
@@ -31,7 +32,7 @@ const screenOptions = ({route}: {route: RouteProp<any>}) =>
 function HomeTabs() {
   return (
     <Tab.Navigator screenOptions={screenOptions}>
-      <Tab.Screen name={'home2'} component={DetailPage} />
+      <Tab.Screen name={'home2'} component={NearbyPage} />
       <Tab.Screen name={'home1'} component={DetailPage} />
     </Tab.Navigator>
   );
