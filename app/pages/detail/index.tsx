@@ -1,6 +1,7 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {pathName} from '@routes/paths';
 
 function DetailPage({navigation}: NativeStackScreenProps<any>) {
   return (
@@ -8,7 +9,7 @@ function DetailPage({navigation}: NativeStackScreenProps<any>) {
       <Text>Details Screen</Text>
       <TouchableOpacity
         onPress={() => {
-          navigation.push('home');
+          navigation.push(pathName.map);
         }}>
         <Text style={{padding: 50}}>go to details</Text>
       </TouchableOpacity>

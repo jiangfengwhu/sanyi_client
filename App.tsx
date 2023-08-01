@@ -7,26 +7,32 @@ import {
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 import {LightTheme} from '@themes/light';
-import {enableFreeze} from 'react-native-screens';
 import {pages} from '@routes/pages';
+import {init, navRef} from '@utils/initApp';
+import {linking} from '@routes/linking';
 
-enableFreeze(true);
+init();
+
 const Stack = createNativeStackNavigator();
+const options: NativeStackNavigationOptions = {
+  statusBarAnimation: 'fade',
+  statusBarTranslucent: true,
+  statusBarStyle: 'dark',
+  statusBarColor: 'transparent',
+  // headerShown: false,
+};
+function readyInit() {
+  SplashScreen.hide();
+}
 
 function App(): JSX.Element {
-  const options: NativeStackNavigationOptions = {
-    statusBarAnimation: 'fade',
-    statusBarTranslucent: true,
-    statusBarStyle: 'dark',
-    statusBarColor: 'transparent',
-    // headerShown: false,
-  };
-  function readyInit() {
-    SplashScreen.hide();
-  }
   return (
     <SafeAreaProvider>
-      <NavigationContainer onReady={readyInit} theme={LightTheme}>
+      <NavigationContainer
+        onReady={readyInit}
+        theme={LightTheme}
+        ref={navRef}
+        linking={linking}>
         <Stack.Navigator initialRouteName={'home'} screenOptions={options}>
           {pages.map(page => {
             return (
