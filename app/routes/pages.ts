@@ -4,6 +4,7 @@ import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
 import {pathName} from '@routes/paths';
 import {NotFound} from '@pages/notFound';
 import {NearbyPage} from '@pages/nearby';
+import {ScanPage} from '@pages/scan';
 
 interface Page {
   name: string;
@@ -15,4 +16,5 @@ export const pages: Page[] = [
   {name: pathName.user, component: DetailPage},
   {name: pathName.page404, component: NotFound},
   {name: pathName.map, component: NearbyPage},
+  {name: pathName.scan, component: ScanPage, options: {headerShown: false}},
 ];

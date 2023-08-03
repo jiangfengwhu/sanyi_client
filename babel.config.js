@@ -1,7 +1,6 @@
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
   plugins: [
-    'react-native-reanimated/plugin',
     [
       require.resolve('babel-plugin-module-resolver'),
       {
@@ -13,6 +12,12 @@ module.exports = {
           '@themes': './app/themes',
           '@routes': './app/routes',
         },
+      },
+    ],
+    [
+      'react-native-reanimated/plugin',
+      {
+        globals: ['__scanCodes'],
       },
     ],
   ],

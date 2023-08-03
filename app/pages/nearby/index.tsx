@@ -1,13 +1,15 @@
-import React, {useEffect, useRef} from 'react';
-import {AMapSdk, MapType, MapView, Marker} from 'react-native-amap3d';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {MapType, MapView, Marker} from 'react-native-amap3d';
 import {useImmer} from 'use-immer';
-import {Text} from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
-Geolocation.setRNConfiguration({
-  locationProvider: 'auto',
-  skipPermissionRequests: false,
-});
-AMapSdk.init('ed10571585f8d095efdd7ec29a3528ee');
+import {
+  clearWatcher,
+  getCurrentPosition,
+  watchPosition,
+} from '@utils/locationService';
+import {wgs2gcj} from '@utils/locationTransformer';
+// @ts-ignore
+import Icon from 'react-native-vector-icons/FontAwesome6';
+
 function NearbyPage() {
   const mapRef = useRef<MapView>(null);
   const [location, updateLocation] = useImmer({
@@ -15,41 +17,48 @@ function NearbyPage() {
     longitude: 0,
   });
   useEffect(() => {
-    const watchId = Geolocation.watchPosition(
-      data => {
-        const {longitude, latitude} = data.coords;
-        console.log(data);
-        updateLocation(draft => {
-          draft.longitude = longitude;
-          draft.latitude = latitude;
-        });
-        mapRef.current?.moveCamera({
-          zoom: 16,
-          target: {
-            latitude,
-            longitude,
-          },
+    const watchId = watchPosition(
+      position => {
+        const {longitude, latitude} = position.coords;
+        const {lat, lng} = wgs2gcj(latitude, longitude);
+        updateLocation({
+          latitude: lat,
+          longitude: lng,
         });
       },
       undefined,
-      {
-        enableHighAccuracy: true,
-        interval: 100,
-        maximumAge: 0,
-        distanceFilter: 0.1,
-      },
+      {enableHighAccuracy: true},
     );
     return () => {
-      Geolocation.clearWatch(watchId);
+      clearWatcher(watchId);
     };
+  }, [updateLocation]);
+
+  const onLoad = useCallback(() => {
+    getCurrentPosition(
+      position => {
+        const {longitude, latitude} = position.coords;
+        const {lat, lng} = wgs2gcj(latitude, longitude);
+        mapRef.current?.moveCamera(
+          {
+            zoom: 18,
+            target: {
+              longitude: lng,
+              latitude: lat,
+            },
+          },
+          300,
+        );
+      },
+      undefined,
+      {timeout: 1000, enableHighAccuracy: true, maximumAge: 0},
+    );
   }, []);
 
   return (
-    <MapView mapType={MapType.Standard} ref={mapRef}>
+    <MapView mapType={MapType.Standard} ref={mapRef} onLoad={onLoad}>
       <Marker position={location}>
-        <Text>
-          {location.latitude} - {location.longitude}
-        </Text>
+        <Icon name={'location-dot'} size={28} color={'purple'} />
       </Marker>
     </MapView>
   );

@@ -5,4 +5,5 @@ export const pathName = {
   page404: 'page404',
   homeTabMain: 'home/main',
   homeTabUser: 'home/user',
+  scan: 'scan',
 };
