@@ -19,7 +19,7 @@
         android:icon="@mipmap/bootsplash_logo"
         android:roundIcon="@mipmap/bootsplash_logo"
         android:allowBackup="false"
-        android:theme="@style/AppTheme"
+        android:theme="@style/SplashTheme"
         android:allowNativeHeapPointerTagging="false"
         tools:targetApi="r">
         <activity

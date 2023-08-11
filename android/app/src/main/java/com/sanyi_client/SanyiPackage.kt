@@ -13,6 +13,7 @@ class SanyiPackage : ReactPackage {
     override fun createNativeModules(reactApplicationContext: ReactApplicationContext): List<NativeModule> {
         val modules: MutableList<NativeModule> = ArrayList()
         modules.add(BundleManagerModule(reactApplicationContext))
+        modules.add(SplashScreenModule(reactApplicationContext))
         return modules
     }
 }

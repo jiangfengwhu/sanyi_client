@@ -5,11 +5,11 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import SplashScreen from 'react-native-splash-screen';
 import {LightTheme} from '@themes/light';
 import {pages} from '@routes/pages';
 import {init, navRef} from '@utils/initApp';
 import {linking} from '@routes/linking';
+import SplashScreen from '@bridges/splashScreen';
 
 init();
 
