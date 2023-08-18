@@ -9,9 +9,9 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 class MainActivity : ReactActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         SplashScreenModule.init(this)
         super.onCreate(savedInstanceState) // or super.onCreate(null) with react-native-screens
-        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 
     /**

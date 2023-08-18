@@ -8,7 +8,7 @@ import {DetailPage} from '@pages/detail';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {RouteProp} from '@react-navigation/core';
 import {pathName} from '@routes/paths';
-import {NotFound} from '@pages/notFound';
+import {ChatPage} from '@pages/chat';
 
 interface HomeTabConfig {
   name: string;
@@ -24,7 +24,7 @@ const pages: HomeTabConfig[] = [
     focusedIcon: 'house',
     normalIcon: 'house',
     label: '首页',
-    component: NotFound,
+    component: ChatPage,
   },
   {
     name: pathName.homeTabUser,

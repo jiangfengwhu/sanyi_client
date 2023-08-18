@@ -16,9 +16,7 @@ init();
 const Stack = createNativeStackNavigator();
 const options: NativeStackNavigationOptions = {
   statusBarAnimation: 'fade',
-  statusBarTranslucent: true,
   statusBarStyle: 'dark',
-  statusBarColor: 'transparent',
   // headerShown: false,
 };
 function readyInit() {

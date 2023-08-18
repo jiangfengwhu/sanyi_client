@@ -6,4 +6,5 @@ export const pathName = {
   homeTabMain: 'home/main',
   homeTabUser: 'home/user',
   scan: 'scan',
+  chat: 'home/chat',
 };

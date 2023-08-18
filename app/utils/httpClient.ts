@@ -1,4 +1,5 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
+import EventSource from 'react-native-sse';
 
 interface ResponseResult {
   code: number;
@@ -9,7 +10,7 @@ export let instance: AxiosInstance;
 
 export function initHttpClient() {
   instance = axios.create({
-    baseURL: 'http://xxxx',
+    baseURL: 'http://localhost:8088',
     timeout: 1000,
     timeoutErrorMessage: '请求超时',
   });
@@ -25,6 +26,16 @@ export async function postApi(
   } catch (e: any) {
     return {code: -1, message: e.message || '服务器错误'};
   }
+}
+
+export function postStream(url: string, params: any) {
+  return new EventSource(url, {
+    method: 'POST',
+    body: JSON.stringify(params),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
 
 export function addInterceptor(cb: (resp: AxiosResponse) => any) {
